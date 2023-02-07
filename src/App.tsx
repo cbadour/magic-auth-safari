@@ -24,38 +24,24 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import React, {useContext, useEffect, useState} from "react";
+import React from "react";
 import Authentication from "./pages/Authentication/Authentication";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import {magicAuthContext} from "./providers/magicAuthProvider/magicAuthContext";
+import PrivateRoute from "./component/PrivateRoute";
 
 setupIonicReact();
 
 const App: React.FC = () => {
-
-    const {magic} = useContext(magicAuthContext);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    useEffect(() => {
-        magic?.user.isLoggedIn().then(result => {
-            setIsLoggedIn(result)
-        })
-    }, [magic?.user]);
-
     return (
         <IonApp>
             <IonReactRouter>
                 <IonRouterOutlet>
                     <Route exact path='/login'>
-                        {!isLoggedIn ?
-                            <Authentication/> :
-                            <Redirect to="/dashboard"/>}
+                        <Authentication/>
                     </Route>
-                    <Route exact path='/dashboard'>
-                        {isLoggedIn ?
-                            <Dashboard/> :
-                            <Redirect to="/login"/>}
-                    </Route>
+                    <PrivateRoute exact path='/dashboard'>
+                        <Dashboard/>
+                    </PrivateRoute>
                     <Route exact path="/">
                         <Redirect to="/dashboard"/>
                     </Route>

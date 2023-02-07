@@ -1,11 +1,13 @@
 import React, {useContext, useState} from 'react';
 import {magicAuthContext} from "../../providers/magicAuthProvider/magicAuthContext";
+import {useHistory} from "react-router";
 
 const Authentication: React.FC = () => {
 
     const [email, setEmail] = useState('');
     const [error, setError] = useState<string | undefined>('');
     const {magic} = useContext(magicAuthContext);
+    const {push} = useHistory();
 
     const login = async (email: string): Promise<void> => {
         try {
@@ -21,11 +23,13 @@ const Authentication: React.FC = () => {
         }
 
         await login(email);
+        push('/dashboard');
     }
 
     return (
         <div>
             <label>Email Address</label>
+            <br/>
             <input
                 placeholder='Please enter your email address'
                 value={email}
