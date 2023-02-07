@@ -1,0 +1,7 @@
+{
+  "name": "magic-auth-safari",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
